@@ -10,7 +10,7 @@ def getInput():
     return inputList
 
 
-test
+
 
 class Decoder:
     def __init__(self):
