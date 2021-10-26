@@ -10,8 +10,6 @@ def getInput():
     return inputList
 
 
-
-
 class Decoder:
     def __init__(self):
         self.k = 0
@@ -23,47 +21,37 @@ class Decoder:
         self.STinput = STinput
         self.k = STinput[0]
         self.s = STinput[1]
+        offset = 2
 
         if not self.k.isdecimal():
-            sys.exit("NO!")
+            return False
 
         if not self.s.islower():
-            sys.exit("NO!")
-
-        offset = 2
+            return False
 
         for i in range(0, int(self.k)):
             if not self.STinput[i + offset].isalpha():
-                sys.exit("NO!")
+                return False
             else:
                 self.listT.append(STinput[i + offset])
 
         for i in range(offset + int(self.k), len(STinput)):
-            # prog = re.compile("(^[A-Z]: )" + "(([a-z])*, )*")
             Upp = re.compile("^[A-Z]:")
-            # if not Upp.match(self.STinput[i]):
-            #     print("First letter")
-            #     sys.exit("NO!")
-            # low = re.compile("^[a-z]+, ")
-            #
-            # a, b = map(list, Upp.split(self.STinput[i]))
-            # # splitted = Upp.split(self.STinput[i])
-            # print(a)
-            # print(b)
-            # print(len(b))
-            # for j in range(0, len(b)):
-            #     print(b[j])
-            #     if not low.match(b[j]):
-            #         print("lower case ")
-            #         sys.exit("NO!")
-            #
-            # self.listR.append(STinput[i])
-                    # if not re.match("^[A-Z]: " + "(([a-z]*), )+", self.STinput[i]):
+            low = re.compile("[a-z]")
+
             if not Upp.match(self.STinput[i]):
-                print("matching")
-                sys.exit("NO!")
-            else:
-                self.listR.append(STinput[i])
+                print("First letter")
+                return False
+
+            a, b = map(list, Upp.split(self.STinput[i]))
+            for j in range(0, len(b)):
+                if b[j].isalpha():
+                    if not low.match(b[j]):
+                        return False
+
+            self.listR.append(STinput[i])
+
+        return True
 
     def get_k(self):
         return self.k
